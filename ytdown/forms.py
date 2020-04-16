@@ -6,3 +6,6 @@ class LinkForm(forms.Form):
 
 class ConvertLink(forms.Form):
     ConvertLink = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Enter video Link to convert Here'}) , label = False)
+
+class PlayListForm(forms.Form):
+    PlayLink = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Enter Video PLaylist Link Here'}) , label = False)

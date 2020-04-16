@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="search-box">
+        <h2 style="text-align:center;color:white;margin-bottom:0;">Free Youtube Playlist Downloader</h2>
+        <p style="text-align:center;color:white;margin-bottom:0;margin-top:20px;">Just paste youtube video link below</p>
+        <div class="col-sm-6 ml-auto mr-auto">
+            <form method="POST">
+                {% csrf_token %}
+                {{form | crispy}}
+                <center><input style="width: 100%; margin:0;height:50px;background-color:indigo;color:white" class="btn btn-deep-purple" type="submit" value="Generate Links"></center>
+            </form>
+        </div>
+    </div>
+    <div>
+        <h1 class="text-center" style="margin-top: 10px;" >{{title}}</h1>
+        <h3 class="text-center" style="margin-top: 10px;">{{author}}</h3>
+    </div>
+    <div class="container">
+        {% if data %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Item No</th>
+                    <th>Title</th>
+                    <th>Thumbnail</th>
+                    <th>Download</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in data %}
+                <tr>
+                    <td>#</td>
+                    <td>{{item.title}}</td>
+                    <th> <img src="{{item.thumb}}" alt="" class="img-fluid" width="100%" height="100%" > </th>
+                    <td> <a href="{{item.link}}" target="blank" class="btn btn-primary">Download</a> </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+{% endblock content %}

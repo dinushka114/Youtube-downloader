@@ -9,7 +9,7 @@ import youtube_dl
 import ffmpeg
 
 
-from .forms import LinkForm , ConvertLink
+from .forms import LinkForm , ConvertLink , PlayListForm
 from django.template.defaultfilters import filesizeformat
 from django.contrib import messages
 def index(request):
@@ -56,42 +56,32 @@ def index(request):
                                 'form':form , 'video':embed_link , 'info':video} )
     return render(request , 'index.html' , {'form':form})
 
-def converter(request):
-    # home = os.path.expanduser("~")
-
-    form = ConvertLink(request.POST or None)
+def playlist_downloader(request):
+    form = PlayListForm(request.POST or None)
     if(form.is_valid()):
-        url = form.cleaned_data.get('ConvertLink')
-        video = pafy.new(url)
-        # title = video.title.replace(' ','_')
-        # best_audio = video.getbestaudio()
-        # BESTFILE = os.path.join(home, "Downloads") + "/" + str(title) + "." + str(best_audio.extension)
-        # MP3FILE = os.path.join(home, "Downloads") + "/" + str(title) + ".mp3"
-        # # print(BESTFILE , MP3FILE)
-        # messages.success(request , 'Your file is downloadin to your downloads folder')
-        # best_audio.download(BESTFILE)
-        # print ("You have successfully downloaded the ."+str(best_audio.extension)+" file")
-        # command = "ffmpeg -i "+str(BESTFILE)+" -vn -ab 128k -ar 44100 -y "+str(MP3FILE)
-        # print ("Command to convert audio file to .mp3 format: ", command)
-        # subprocess.call(command, shell=True)
-        # os.remove(BESTFILE)
-        # print ("Generated mp3 file for "+ str(title))
-        # return render(request , 'converter.html' , {'form':form})
-        
-        # name = pytube.extract.video_id(url)
-        # print(name)
-        # YouTube(url).streams.filter(only_audio=True).first().download(filename=name)
-        ydl_opts = {
-            'format':'bestaudio/best',
-            'postprocessors':[{
-                'key':'FFmpegExtractAudio',
-                'preferredcodec':'mp3',
-                'preferredquality':'192'
-            }],
-        }
+        playlist_url = form.cleaned_data.get('PlayLink')
+        playlist = pafy.get_playlist(playlist_url)
+        PlayListTitle = playlist['title'] ##playlist eke titile eka
+        PlayListAuthor = playlist['author']
+        length_of_playlist = len(playlist['items']) # playlist eke tiyana videos gaaana
+        print(length_of_playlist)
+     
+        links = []
+        x = 0
+        data = []
+        while(x<length_of_playlist):
+            data.append({
+                'link':playlist['items'][x]['pafy'].getbest().url,
+                'thumb':playlist['items'][x]['pafy'].bigthumb,
+                'title':playlist['items'][x]['pafy'].title
+            })
+            x+=1
 
-        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-            filename = url
-            ydl.download([filename])
+        return render(request , 'playlist.html' , {'form':form , 
+                                                    'data':data ,
+                                                     'title':PlayListTitle,
+                                                     'author':PlayListAuthor })
+  
 
-    return render(request , 'converter.html' , {'form':form})
+    return render(request , 'playlist.html' , {'form':form})
+

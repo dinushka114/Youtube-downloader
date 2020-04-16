@@ -3,5 +3,5 @@ from . import views
 
 urlpatterns = [
     path('' , views.index , name="index"),
-    path('convert/' , views.converter , name='converter')
+    path('play-list/' , views.playlist_downloader , name='playlist')
 ]
