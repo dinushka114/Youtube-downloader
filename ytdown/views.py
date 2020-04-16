@@ -6,6 +6,7 @@ import pafy
 import pytube
 from pytube import YouTube
 import youtube_dl
+import ffmpeg
 
 from .forms import LinkForm , ConvertLink
 from django.template.defaultfilters import filesizeformat
@@ -15,6 +16,18 @@ def index(request):
     if(form.is_valid()):
         url = form.cleaned_data.get('link')
         video = pafy.new(url)
+
+        ##convert to best
+        # bstv = video.getbestvideo(preftype='mp4')
+        # bsta = video.getbestaudio(preftype = 'm4a')
+        # print(bstv.url)
+        # print(bsta.url)
+        # print(bstv.resolution)
+
+        # input_video = ffmpeg.input(bstv.url)
+        # added_audio = ffmpeg.input(bsta.url).audio.filter('adelay', "1500|1500")
+        # merged_audio = ffmpeg.filter([input_video.audio, added_audio], 'amix')
+
         embed_link = url.replace('watch?v=' , 'embed/')
         allstreams = video.streams #all streams
         VideoAndAudioStreams = []
@@ -28,7 +41,7 @@ def index(request):
         AudioStreams = []
         allaudiostreams = video.audiostreams
         for stream in allaudiostreams:
-            VideoAndAudioStreams.append({
+            AudioStreams.append({
                 'resolution':stream.resolution,
                 'extension':stream.extension,
                 'filesize':filesizeformat(stream.get_filesize()),
@@ -41,7 +54,7 @@ def index(request):
     return render(request , 'index.html' , {'form':form})
 
 def converter(request):
-    home = os.path.expanduser("~")
+    # home = os.path.expanduser("~")
 
     form = ConvertLink(request.POST or None)
     if(form.is_valid()):

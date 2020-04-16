@@ -55,7 +55,7 @@
                     {% for as in audio_streams %}
                     <div class="p-3 mb-2 bg-light text-white"> <h2 style="text-align: center;color:black">Download Audio</h2> </div>
                     <tr>
-                        <td>{{as.resolution}}(.{{va.extension}})</td>
+                        <td>(.{{va.extension}})</td>
                         <td>{{as.filesize}}</td>
                         <td> <a href="{{as.video_url}}" target="blank" class="btn btn-success">download</a> </td>
                     </tr>

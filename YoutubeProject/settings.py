@@ -23,9 +23,9 @@ STATIC_DIR = os.path.join(BASE_DIR , 'static')
 SECRET_KEY = 'i!2w(@awspbsfrin^-6^q!y16l5qrj2+mm0+%1r*vlxe3rniwu'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['newytdown.herokuapp.com']
+# ALLOWED_HOSTS = ['newytdown.herokuapp.com']
 
 
 # Application definition
