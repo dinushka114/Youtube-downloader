@@ -7,6 +7,7 @@ import pytube
 from pytube import YouTube
 import youtube_dl
 import ffmpeg
+from moviepy.editor import *
 
 from .forms import LinkForm , ConvertLink
 from django.template.defaultfilters import filesizeformat
@@ -18,8 +19,8 @@ def index(request):
         video = pafy.new(url)
 
         ##convert to best
-        # bstv = video.getbestvideo(preftype='mp4')
-        # bsta = video.getbestaudio(preftype = 'm4a')
+        bstv = video.getbestvideo(preftype='mp4')
+        bsta = video.getbestaudio(preftype = 'm4a')
         # print(bstv.url)
         # print(bsta.url)
         # print(bstv.resolution)
@@ -27,6 +28,8 @@ def index(request):
         # input_video = ffmpeg.input(bstv.url)
         # added_audio = ffmpeg.input(bsta.url).audio.filter('adelay', "1500|1500")
         # merged_audio = ffmpeg.filter([input_video.audio, added_audio], 'amix')
+
+        # ffmpeg.concat(input_video, added_audio, v=1, a=1).output('finished_video.mp4').run()
 
         embed_link = url.replace('watch?v=' , 'embed/')
         allstreams = video.streams #all streams
