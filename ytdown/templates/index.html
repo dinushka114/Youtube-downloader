@@ -28,15 +28,13 @@
                     <tr>
                         <th>Quality</th>
                         <th>Size</th>
-                        <th>extention</th>
                         <th>Download</th>
                     </tr>
                 </thead>
                     {% for va in all_streams %}
                     <tr>
-                        <td>{{va.resolution}}</td>
+                        <td>{{va.resolution}}(.{{va.extension}})</td>
                         <td>{{va.filesize}}</td>
-                        <td>{{va.extension}}</td>
                         <td> <a href="{{va.video_url}}" target="blank" class="btn btn-success">download</a> </td>
                     </tr>
                     {% endfor %}
@@ -44,48 +42,21 @@
                 </table>
                 <hr>
                 {% endif %}
-                
-                {% if video_streams %}
-                <div class="p-3 mb-2 bg-light text-white"> <h2 style="text-align: center;color:black">Only Video streams</h2> </div>
-                <table class="table table-striped ">
-                <thead>
-                    <tr>
-                        <th>Quality</th>
-                        <th>Size</th>
-                        <th>extention</th>
-                        <th>Download</th>
-                    </tr>
-                </thead>
-                    {% for vs in video_streams %}
-                    <tr>
-                        <td>{{vs.resolution}}</td>
-                        <td>{{vs.filesize}}</td>
-                        <td>{{vs.extension}}</td>
-                        <td> <a href="{{vs.video_url}}" target="blank" class="btn btn-success">download</a> </td>
-                    </tr>
-                    {% endfor %}
         
-                </table>
-                <hr>
-                {% endif %}
-              
-
                 {% if audio_streams %}
                 <table class="table table-striped table-responsive">
                 <thead>
                     <tr>
                         <th>Quality</th>
                         <th>Size</th>
-                        <th>extention</th>
                         <th>Download</th>
                     </tr>
                 </thead>
                     {% for as in audio_streams %}
                     <div class="p-3 mb-2 bg-light text-white"> <h2 style="text-align: center;color:black">Download Audio</h2> </div>
                     <tr>
-                        <td>{{as.resolution}}</td>
+                        <td>{{as.resolution}}(.{{va.extension}})</td>
                         <td>{{as.filesize}}</td>
-                        <td>{{as.extension}}</td>
                         <td> <a href="{{as.video_url}}" target="blank" class="btn btn-success">download</a> </td>
                     </tr>
                     {% endfor %}

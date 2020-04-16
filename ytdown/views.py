@@ -6,7 +6,6 @@ import pafy
 import pytube
 from pytube import YouTube
 import youtube_dl
-import sys
 
 from .forms import LinkForm , ConvertLink
 from django.template.defaultfilters import filesizeformat
@@ -18,8 +17,17 @@ def index(request):
         video = pafy.new(url)
         embed_link = url.replace('watch?v=' , 'embed/')
         allstreams = video.streams #all streams
-        VideoAudioStreams = []
+        VideoAndAudioStreams = []
         for stream in allstreams:
+            VideoAndAudioStreams.append({
+                'resolution':stream.resolution,
+                'extension':stream.extension,
+                'filesize':filesizeformat(stream.get_filesize()),
+                'video_url':stream.url + "&title"+stream.title
+            })
+        AudioStreams = []
+        allaudiostreams = video.audiostreams
+        for stream in allaudiostreams:
             VideoAndAudioStreams.append({
                 'resolution':stream.resolution,
                 'extension':stream.extension,
@@ -28,6 +36,7 @@ def index(request):
             })
 
         return render(request , 'index.html' ,{'all_streams':VideoAndAudioStreams ,
+                                                'audio_streams':AudioStreams,
                                 'form':form , 'video':embed_link , 'info':video} )
     return render(request , 'index.html' , {'form':form})
 
