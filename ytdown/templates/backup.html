@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+        <div class="search-box">
+            <div class="col-sm-6 ml-auto mr-auto">
+                <form method="POST">
+                    {% csrf_token %}
+                    {{form | crispy}}
+                    <center><input style="width: 100%; margin:0;height:50px;" class="btn btn-primary" type="submit" value="Generate Links"></center>
+                </form>
+            </div>
+        </div>
+        <div style="text-align: center;margin-top:40px;margin-bottom:40px;">
+            <h3 style="font-size:20px;">{{info.title}}</h3>
+            <h3 style="font-size:20px;">{{info.author}}</h3>
+        </div>
+        <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                {% if video %}
+                <div>
+                    <img src="{{info.bigthumb}}" alt="" width="100%" class="img-fluid img-responsive">
+                </div>
+                <br>
+            </div>
+            {% endif %}
+            <div class="col-sm-8">
+                {% if all_streams %}
+                <div class="p-3 mb-2 bg-light text-white"> <h2 style="text-align: center;color:black">Download Video with Audio</h2> </div>
+                <table class="table table-striped ">
+                <thead>
+                    <tr>
+                        <th>Quality</th>
+                        <th>Size</th>
+                        <th>Download</th>
+                    </tr>
+                </thead>
+                    {% for va in all_streams %}
+                    <tr>
+                        <td>{{va.resolution}}(.{{va.extension}})</td>
+                        <td>{{va.filesize}}</td>
+                        <td> <a href="{{va.video_url}}" target="blank" class="btn btn-success">download</a> </td>
+                    </tr>
+                    {% endfor %}
+        
+                </table>
+                <hr>
+                {% endif %}
+        
+                {% if audio_streams %}
+                <div class="p-3 mb-2 bg-light text-white"> <h2 style="text-align: center;color:black">Download Audio</h2> </div>
+                <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Quality</th>
+                        <th>Size</th>
+                        <th>Download</th>
+                    </tr>
+                </thead>
+                    {% for as in audio_streams %}
+                    <tr>
+                        <td>.{{as.extension}}</td>
+                        <td>{{as.filesize}}</td>
+                        <td> <a href="{{as.video_url}}" target="blank" class="btn btn-success">download</a> </td>
+                    </tr>
+                    {% endfor %}
+        
+                </table>
+              
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+
+ 
+{% endblock content %}
