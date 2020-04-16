@@ -7,7 +7,7 @@ import pytube
 from pytube import YouTube
 import youtube_dl
 import ffmpeg
-from moviepy.editor import *
+
 
 from .forms import LinkForm , ConvertLink
 from django.template.defaultfilters import filesizeformat
@@ -19,8 +19,8 @@ def index(request):
         video = pafy.new(url)
 
         ##convert to best
-        bstv = video.getbestvideo(preftype='mp4')
-        bsta = video.getbestaudio(preftype = 'm4a')
+        # bstv = video.getbestvideo(preftype='mp4')
+        # bsta = video.getbestaudio(preftype = 'm4a')
         # print(bstv.url)
         # print(bsta.url)
         # print(bstv.resolution)
