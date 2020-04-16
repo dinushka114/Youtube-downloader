@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="container">
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{form|crispy}}
+            <input style="width: 100%;" type="submit" value="Convert and Download" class="btn btn-primary">
+        </form>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-primary" role="alert">
+                    {{message}}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endblock content %}
