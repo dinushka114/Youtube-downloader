@@ -46,7 +46,7 @@ python-dateutil==2.8.1
 pytube3==9.6.4
 pytz==2018.7
 requests==2.23.0
-rsa==4.0
+rsa==4.7
 s3transfer==0.3.3
 six==1.14.0
 sqlparse==0.3.1
