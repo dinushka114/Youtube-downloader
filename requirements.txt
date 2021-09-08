@@ -33,7 +33,7 @@ jmespath==0.9.5
 lazy-object-proxy==1.4.3
 mccabe==0.6.1
 pafy==0.5.4
-Pillow==7.1.0
+Pillow==8.3.2
 protobuf==3.11.3
 psycopg2==2.8.5
 pyasn1==0.4.8
